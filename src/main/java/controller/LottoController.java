@@ -32,7 +32,11 @@ public class LottoController {
             outputView.printPurchasedLottos(ticket);
 
             List<Integer> winningNumbers = inputView.readWinningNumbers();
+            Validator.validateLottoNumbers(winningNumbers);
+            
             int bonusNumber = inputView.readBonusNumber();
+            Validator.validateBonusNumber(bonusNumber, winningNumbers);
+            
             WinningLotto winningLotto = new WinningLotto(winningNumbers, bonusNumber);
 
             Map<Rank, Integer> results = resultCalculator.calculate(ticket, winningLotto);
