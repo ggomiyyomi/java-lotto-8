@@ -6,8 +6,7 @@ import domain.repository.LottoRepository;
 import domain.service.LottoMachine;
 import domain.service.LottoResultCalculator;
 import domain.service.ProfitCalculator;
-import domain.value.Rank;
-import utils.Formatter;
+import domain.value.Rank; 
 import utils.Validator;
 import views.InputView;
 import views.OutputView;
@@ -39,7 +38,7 @@ public class LottoController {
             Map<Rank, Integer> results = resultCalculator.calculate(ticket, winningLotto);
             double profitRate = profitCalculator.calculateProfitRate(results, purchaseAmount);
 
-            outputView.printStatistics(results, Formatter.formatProfit(profitRate));
+            outputView.printStatistics(results, profitRate);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             LottoRepository.clear(); // 재시작 시 데이터 초기화

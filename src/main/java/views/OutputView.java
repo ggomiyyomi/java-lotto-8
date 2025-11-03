@@ -15,14 +15,22 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printStatistics(Map<Rank, Integer> results, String formattedProfit) {
+    public void printStatistics(Map<Rank, Integer> results, double profitRate) {
         System.out.println("당첨 통계");
         System.out.println("---");
-        for (Rank rank : Rank.values()) {
-            if (rank == Rank.NONE) continue;
+        Rank[] printOrder = {
+                Rank.FIFTH,    
+                Rank.FOURTH,  
+                Rank.THIRD,    
+                Rank.SECOND,  
+                Rank.FIRST    
+        };
+        for (Rank rank : printOrder) {
             int count = results.getOrDefault(rank, 0);
             System.out.printf("%s - %d개%n", rank.getDescription(), count);
         }
-        System.out.printf("총 수익률은 %s입니다.%n", formattedProfit);
+ 
+        System.out.println("총 수익률은 " + Formatter.formatProfit(profitRate) + "입니다.");
     }
+
 }
