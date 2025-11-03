@@ -7,7 +7,12 @@ import java.util.List;
 public class InputView {
     public int readPurchaseAmount() {
         System.out.println("구입 금액을 입력해 주세요.");
-        return Integer.parseInt(Console.readLine().trim());
+        String input = Console.readLine().trim();
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 구입 금액은 숫자만 입력해야 합니다.");
+        }
     }
 
     public List<Integer> readWinningNumbers() {
