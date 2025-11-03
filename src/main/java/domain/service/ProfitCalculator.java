@@ -1,7 +1,8 @@
 package domain.service;
 
-import domain.value.Rank;
 import java.util.Map;
+import domain.value.Money;
+import domain.value.Rank;
 
 public class ProfitCalculator {
     public double calculateProfitRate(Map<Rank, Integer> results, int purchaseAmount) {
@@ -11,6 +12,7 @@ public class ProfitCalculator {
                 .mapToDouble(entry -> entry.getKey().getPrize() * entry.getValue())
                 .sum();
         
-        return (totalPrize / purchaseAmount) * 100;
+        Money purchaseMoney = new Money(purchaseAmount);
+        return purchaseMoney.calculateYield(totalPrize);
     }
 }

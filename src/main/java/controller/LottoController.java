@@ -2,10 +2,12 @@ package controller;
 
 import domain.model.LottoTicket;
 import domain.model.WinningLotto;
+import domain.repository.LottoRepository;
 import domain.service.LottoMachine;
 import domain.service.LottoResultCalculator;
 import domain.service.ProfitCalculator;
 import domain.value.Rank;
+import utils.Formatter;
 import utils.Validator;
 import views.InputView;
 import views.OutputView;
@@ -26,6 +28,8 @@ public class LottoController {
             Validator.validatePurchaseAmount(purchaseAmount);
 
             LottoTicket ticket = lottoMachine.purchase(purchaseAmount);
+            ticket.getTickets().forEach(LottoRepository::save);
+
             outputView.printPurchasedLottos(ticket);
 
             List<Integer> winningNumbers = inputView.readWinningNumbers();
@@ -35,10 +39,11 @@ public class LottoController {
             Map<Rank, Integer> results = resultCalculator.calculate(ticket, winningLotto);
             double profitRate = profitCalculator.calculateProfitRate(results, purchaseAmount);
 
-            outputView.printStatistics(results, profitRate);
+            outputView.printStatistics(results, Formatter.formatProfit(profitRate));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            run(); // 재시작
+            LottoRepository.clear(); // 재시작 시 데이터 초기화
+            run(); // 재입력 루프
         }
     }
 }
