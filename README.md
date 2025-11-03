@@ -82,24 +82,69 @@ gradlew.bat clean test    # Windows
 
 ## 🧱 패키지 구조
 ```
-src
- ├── main
- │    └── java
- │        └── lotto
- │             ├── Application.java
- │             ├── Lotto.java
- │             ├── LottoMachine.java
- │             ├── LottoResult.java
- │             ├── Rank.java
- │             └── Validator.java
- └── test
-      └── java
-           └── lotto
-                ├── LottoTest.java
-                ├── LottoMachineTest.java
-                └── ValidatorTest.java
+└── src
+    ├── main
+    │   └── java
+    │       ├── controller
+    │       │   └── LottoController.java
+    │       ├── domain
+    │       │   ├── model
+    │       │   │   ├── Lotto.java
+    │       │   │   ├── LottoTicket.java
+    │       │   │   └── WinningLotto.java
+    │       │   ├── repository
+    │       │   │   └── LottoRepository.java
+    │       │   ├── service
+    │       │   │   ├── LottoMachine.java
+    │       │   │   ├── LottoResultCalculator.java
+    │       │   │   └── ProfitCalculator.java
+    │       │   └── value
+    │       │       ├── Money.java
+    │       │       └── Rank.java
+    │       ├── exception
+    │       │   ├── DuplicateNumberException.java
+    │       │   ├── InvalidInputException.java
+    │       │   └── LottoNumberOutOfRangeException.java
+    │       ├── lotto
+    │       │   └── Application.java
+    │       ├── utils
+    │       │   ├── Formatter.java
+    │       │   ├── LottoNumberGenerator.java
+    │       │   └── Validator.java
+    │       └── views
+    │           ├── InputView.java
+    │           └── OutputView.java
+    └── test
+        └── java
+            ├── controller
+            │   └── LottoControllerTest.java
+            ├── domain
+            │   ├── model
+            │   │   ├── LottoTest.java
+            │   │   ├── LottoTicketTest.java
+            │   │   └── WinningLottoTest.java
+            │   ├── service
+            │   │   ├── LottoMachineTest.java
+            │   │   ├── LottoResultCalculatorTest.java
+            │   │   └── ProfitCalculatorTest.java
+            │   └── value
+            │       └── RankTest.java
+            ├── lotto
+            │   ├── ApplicationTest.java
+            │   └── LottoIntegrationTest.java
+            ├── utils
+            │   ├── FormatterTest.java
+            │   └── ValidatorTest.java
+            └── views
+                ├── InputViewTest.java
+                └── OutputViewTest.java
 ```
 
 ---
 
 ## 회고
+이번 과제는 이전보다 훨씬 복잡한 구조로 되어 있어서 처음엔 많이 헷갈렸다.
+패키지를 어떻게 나누고, 클래스끼리 어떤 관계를 만들어야 할지 고민이 많았다. 그래도 객체마다 역할을 분리하고 서로 협력하도록 설계하면서 점점 구조가 잡혀갔다. 예외 처리와 입력 검증을 따로 분리해 보니 코드가 훨씬 읽기 쉬워졌고, Formatter나 Repository 같은 계층을 추가하면서 확장성과 테스트하기 좋은 구조가 되었다.
+과정을 진행하면서 단순히 동작하는 코드를 넘어서, “왜 이런 구조가 필요한가”를 고민하게 된 점이 가장 큰 배움이었다.
+
+또한 이번 과제도 실무 반영을 위해 테스트를 패키지 미러링으로 진행하였다.이런 프로젝트 같은 작은 규모의 미션은 불필요하게 복잡해지지만 자세하게 진행해보고싶었다. 
